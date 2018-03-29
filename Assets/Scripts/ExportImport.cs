@@ -10,7 +10,6 @@ using System.Xml.Serialization;
 public class ExportImport : MonoBehaviour
 {
     private Text scenarioLoadName;
-
     private Text scenarioName;
     private Text drugName;
     private Text vitalName;
@@ -26,9 +25,7 @@ public class ExportImport : MonoBehaviour
 
     public void ExportDrug()
     {
-        //string destination = Application.persistentDataPath + "/save.dat";
         FileStream file;
-        //map = mapInfo.GetMap();
         string destination = Application.persistentDataPath + "/";
         string fileName = destination + scenarioName.text;
 

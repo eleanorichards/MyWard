@@ -9,22 +9,22 @@ using System.Xml.Serialization;
 public class GraphData : MonoBehaviour
 {
     [XmlAttribute("Name")]
-    private string drugName;
+    public string drugName;
 
     [XmlAttribute("Vital Name")]
-    private string vitalName;
+    public string vitalName;
 
     [XmlArray("Drug Points")]
-    private Vector2[] drugData;
+    public Vector2[] drugData;
 
     [XmlArray("MinMaxTime")]
-    private int[,] timeScale = new int[1, 1];
+    public int[,] timeScale = new int[1, 1];
 
     [XmlArray("MinMaxTime2")]
-    private int[,] vitalScale = new int[1, 1];
+    public int[,] vitalScale = new int[1, 1];
 
-    [XmlElement("dosage")]
-    private float drugDose;
+    [XmlElement("Dosage")]
+    public float drugDose;
 
     /// <summary>
     ///

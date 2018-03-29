@@ -66,7 +66,7 @@ public class AxisGen : MonoBehaviour
     {
         graphHolder = GameObject.Find("Axis");
         xAxis = GameObject.Find("xAxis").GetComponent<LineRenderer>();
-        yAxis = GameObject.Find("xAxis").GetComponent<LineRenderer>();
+        yAxis = GameObject.Find("yAxis").GetComponent<LineRenderer>();
         canvas = GameObject.Find("GraphCanvas");
         xSmallMarker = Resources.Load("SmallLabel") as GameObject;
         xLargeMarker = Resources.Load("TimeLabel") as GameObject;
@@ -75,6 +75,7 @@ public class AxisGen : MonoBehaviour
         textBox = Resources.Load("TextBox") as GameObject;
         xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
         yAxisLabel = GameObject.Find("YLabel").GetComponent<Text>();
+        origin = graphHolder.transform.position;
         SetTimeScale();
         DrawXMarkerLines();
         DrawYMarkerLines();
