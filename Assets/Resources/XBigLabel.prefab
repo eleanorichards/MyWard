@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 120455649340107446}
   - component: {fileID: 222534898399404394}
   m_Layer: 0
-  m_Name: TimeLabel
+  m_Name: XBigLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,6 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!222 &222534898399404394

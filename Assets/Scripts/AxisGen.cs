@@ -48,9 +48,10 @@ public class AxisGen : MonoBehaviour
 
     private GameObject graphHolder;
     private GameObject canvas;
+    private GameObject textBox;
     private Text xAxisLabel;
     private Text yAxisLabel;
-    private GameObject textBox;
+
     private int number_spacing = 0;
     private int label_spacing = 0;
     private float largeMarkerPos = 0.0f;
@@ -64,18 +65,21 @@ public class AxisGen : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        //INITIALISATION
         graphHolder = GameObject.Find("Axis");
         xAxis = GameObject.Find("xAxis").GetComponent<LineRenderer>();
         yAxis = GameObject.Find("yAxis").GetComponent<LineRenderer>();
         canvas = GameObject.Find("GraphCanvas");
-        xSmallMarker = Resources.Load("SmallLabel") as GameObject;
-        xLargeMarker = Resources.Load("TimeLabel") as GameObject;
+        xSmallMarker = Resources.Load("XSmallLabel") as GameObject;
+        xLargeMarker = Resources.Load("XBigLabel") as GameObject;
         ySmallMarker = Resources.Load("YSmallLabel") as GameObject;
         yLargerMarker = Resources.Load("YBigLabel") as GameObject;
         textBox = Resources.Load("TextBox") as GameObject;
         xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
         yAxisLabel = GameObject.Find("YLabel").GetComponent<Text>();
         origin = graphHolder.transform.position;
+
+        //INITIALISATION
         SetTimeScale();
         DrawXMarkerLines();
         DrawYMarkerLines();
@@ -144,7 +148,7 @@ public class AxisGen : MonoBehaviour
         {
             smallMarkerPos = largeMarkerPos;
             GameObject curTimeLabel = Instantiate(xLargeMarker, new Vector3(largeMarkerPos, 0.0f, 0.0f), Quaternion.identity);
-            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, -0.5f, 0.0f), Quaternion.identity);
+            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, -0.7f, 0.0f), Quaternion.identity);
             largerMarkerLabel.GetComponent<Text>().text = hour.ToString();
             largerMarkerLabel.transform.SetParent(graphHolder.transform);
             largeMarkerPos += xEndPos.x / maxTime;
@@ -161,7 +165,7 @@ public class AxisGen : MonoBehaviour
                     GameObject curSmallLabel = Instantiate(xSmallMarker, new Vector3(smallMarkerPos, 0.0f, 0.0f), Quaternion.identity);
                     if (b == 3)
                     {
-                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(smallMarkerPos, -0.3f, 0.0f), Quaternion.identity);
+                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(smallMarkerPos, -0.5f, 0.0f), Quaternion.identity);
                         Text tempText = smallMarkerLabel.GetComponent<Text>();
                         tempText.fontSize = 12;
                         tempText.text = hour.ToString() + ":30";
@@ -180,7 +184,7 @@ public class AxisGen : MonoBehaviour
 
     private void DrawYMarkerLines()
     {
-        int breathingRate = 0;
+        int yScaleVal = 0;
         largeMarkerPos = 0.0f;
         smallMarkersSet = false;
         smallMarkerProgression = 0.0f;
@@ -190,8 +194,8 @@ public class AxisGen : MonoBehaviour
         {
             smallMarkerPos = largeMarkerPos;
             GameObject curTimeLabel = Instantiate(yLargerMarker, new Vector3(0.0f, largeMarkerPos, 0.0f), Quaternion.identity);
-            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(-0.5f, largeMarkerPos, 0.0f), Quaternion.identity);
-            largerMarkerLabel.GetComponent<Text>().text = breathingRate.ToString();
+            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(-0.6f, largeMarkerPos, 0.0f), Quaternion.identity);
+            largerMarkerLabel.GetComponent<Text>().text = yScaleVal.ToString();
             largerMarkerLabel.transform.SetParent(graphHolder.transform); largeMarkerPos += yEndPos.y / maxVitalRate;
 
             if (!smallMarkersSet) //to ensure the gap starts at 0 each time
@@ -206,10 +210,10 @@ public class AxisGen : MonoBehaviour
                     GameObject curSmallLabel = Instantiate(ySmallMarker, new Vector3(0.0f, smallMarkerPos, 0.0f), Quaternion.identity);
                     if (b == 3)
                     {
-                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.4f, smallMarkerPos, 0.0f), Quaternion.identity);
+                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.5f, smallMarkerPos, 0.0f), Quaternion.identity);
                         Text tempText = smallMarkerLabel.GetComponent<Text>();
                         tempText.fontSize = 12;
-                        tempText.text = breathingRate.ToString() + ":30";
+                        tempText.text = yScaleVal.ToString() + ".50";
                         smallMarkerLabel.transform.SetParent(graphHolder.transform);
                     }
                     smallMarkerPos += smallMarkerProgression;
@@ -218,7 +222,7 @@ public class AxisGen : MonoBehaviour
             }
             curTimeLabel.transform.SetParent(graphHolder.transform);
 
-            breathingRate++;
+            yScaleVal++;
         }
     }
 

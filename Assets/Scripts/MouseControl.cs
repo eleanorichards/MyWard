@@ -10,14 +10,15 @@ public class MouseControl : MonoBehaviour
     private bool editMode = false;
     private GameObject textBox;
     private Text positionText;
+
     public LayerMask acceptMask;
 
     // Use this for initialization
     private void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        pointPlotter = GetComponent<PointPlotter>();
-        textBox = GameObject.Find("CursorPos");
+        textBox = GameObject.Find("CursorPos"); //for displaying current location
+        pointPlotter = GetComponent<PointPlotter>(); //point plotter script
         positionText = textBox.GetComponentInChildren<Text>();
     }
 
