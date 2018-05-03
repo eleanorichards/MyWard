@@ -210,7 +210,7 @@ public class AxisGen : MonoBehaviour
                     GameObject curSmallLabel = Instantiate(ySmallMarker, new Vector3(0.0f, smallMarkerPos, 0.0f), Quaternion.identity);
                     if (b == 3)
                     {
-                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.5f, smallMarkerPos, 0.0f), Quaternion.identity);
+                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.6f, smallMarkerPos - (smallMarkerProgression / 2), 0.0f), Quaternion.identity);
                         Text tempText = smallMarkerLabel.GetComponent<Text>();
                         tempText.fontSize = 12;
                         tempText.text = yScaleVal.ToString() + ".50";
