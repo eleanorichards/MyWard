@@ -35,18 +35,27 @@ public class MouseControl : MonoBehaviour
 
         if (hit)
         {
+            //Set mouse pos and text box vals
             transform.localPosition = hit.point;
             textBox.transform.position = new Vector2(hit.point.x, hit.point.y + 0.3f);
             positionText.text = pointPlotter.ClickRecieved(hit.point).ToString();
+
+            //Place point
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                //pointPlotter.ClickRecieved(hit.point);
+                if (pointPlotter.points.Count > 0)
+                {
+                    if (hit.point.x < pointPlotter.points[pointPlotter.points.Count - 1].transform.position.x)
+                    {
+                        print("NOT VALID LOCATION");
+                        return;
+                    }
+                }
                 pointPlotter.PlacePoint(hit.point);
             }
 
             if (hit.transform.CompareTag("point"))
             {
-                Debug.Log("removing d");
                 if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     Debug.Log("removing point...");

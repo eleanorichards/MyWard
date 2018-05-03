@@ -13,7 +13,7 @@ public class PointPlotter : MonoBehaviour
 
     private GameObject graphPoint;
 
-    private List<GameObject> points = new List<GameObject>();
+    public List<GameObject> points = new List<GameObject>();
     private LineRenderer lineRend;
 
     // Use this for initialization
