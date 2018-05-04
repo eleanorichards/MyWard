@@ -208,13 +208,27 @@ public class AxisGen : MonoBehaviour
                 for (int b = 0; b < smallMarkerNum; b++) //break in to 10's of minutes
                 {
                     GameObject curSmallLabel = Instantiate(ySmallMarker, new Vector3(0.0f, smallMarkerPos, 0.0f), Quaternion.identity);
-                    if (b == 3)
+                    if (smallMarkerNum % 2 == 1)
                     {
-                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.6f, smallMarkerPos - (smallMarkerProgression / 2), 0.0f), Quaternion.identity);
-                        Text tempText = smallMarkerLabel.GetComponent<Text>();
-                        tempText.fontSize = 12;
-                        tempText.text = yScaleVal.ToString() + ".50";
-                        smallMarkerLabel.transform.SetParent(graphHolder.transform);
+                        if (b == (smallMarkerNum / 2) + 1)
+                        {
+                            GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.6f, smallMarkerPos - (smallMarkerProgression / 2), 0.0f), Quaternion.identity);
+                            Text tempText = smallMarkerLabel.GetComponent<Text>();
+                            tempText.fontSize = 12;
+                            tempText.text = yScaleVal.ToString() + ".50";
+                            smallMarkerLabel.transform.SetParent(graphHolder.transform);
+                        }
+                    }
+                    else
+                    {
+                        if (b == smallMarkerNum / 2)
+                        {
+                            GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(-0.6f, smallMarkerPos, 0.0f), Quaternion.identity);
+                            Text tempText = smallMarkerLabel.GetComponent<Text>();
+                            tempText.fontSize = 12;
+                            tempText.text = yScaleVal.ToString() + ".50";
+                            smallMarkerLabel.transform.SetParent(graphHolder.transform);
+                        }
                     }
                     smallMarkerPos += smallMarkerProgression;
                     curSmallLabel.transform.SetParent(graphHolder.transform);
