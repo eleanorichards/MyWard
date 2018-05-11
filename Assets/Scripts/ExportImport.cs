@@ -3,61 +3,71 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+
+[System.Serializable]
+public class VitalData
+{
+    [XmlAttribute("name")]
+    public string Name;
+
+    public Text vitalInfo;
+}
+
+//[XmlRoot("VitalCollection")]
+//public class VitalContainer
+//{
+//    [XmlArray("Vitals")]
+//    [XmlArrayItem("Vital")]
+//    public VitalData[] vitalData;
+//}
 
 public class ExportImport : MonoBehaviour
 {
     private Text scenarioLoadName;
+    public VitalData[] vitalData;
+
     private Text scenarioName;
     private Text drugName;
-    private Text vitalName;
     private Text drugDose;
 
     private Vector2[] drugData;
     private int[,] timeScale;
-    private int[,] vitalScale;
+    public int[,] vitalScale;
+
+    private VitalFileManager vitalManager;
 
     private void Start()
     {
     }
 
-    public void ExportDrug()
+    [MenuItem("Assets/Create/Vital File Manager")]
+    public static void CreateMyAsset()
     {
-        FileStream file;
-        string destination = Application.persistentDataPath + "/";
-        string fileName = destination + scenarioName.text;
+        VitalFileManager asset = ScriptableObject.CreateInstance<VitalFileManager>();
+        AssetDatabase.CreateAsset(asset, "Assets/VitalManager.asset");
+        AssetDatabase.SaveAssets();
 
-        if (File.Exists(fileName))
-        {
-            Debug.Log(fileName + " already exists.");
-            return;
-        }
-        else if (fileName == "")
-        {
-            Debug.Log("Please enter a file name");
-            return;
-        }
+        EditorUtility.FocusProjectWindow();
 
-        file = File.Create(fileName);
-
-        GraphData data = new GraphData(drugData, float.Parse(drugDose.text), timeScale, vitalScale, vitalName.text, drugName.text);
-
-        var serializer = new XmlSerializer(typeof(GraphData));
-        var stream = new FileStream(fileName, FileMode.Create);
-        serializer.Serialize(stream, this);
-        stream.Close();
+        Selection.activeObject = asset;
     }
 
-    public void LoadFile()
+    //vitalData[0]  //Vital name
+    //vitalData[1]  //Vital info
+    //vitalData[2]  //Vital min
+    //vitalData[3]  //Vital min
+    //vitalData[4]  //vital max
+    //vitalData[5]  //vital units
+    public void SaveVital()
     {
-        string destination = Application.persistentDataPath + "/";
-        string fileName = destination + scenarioLoadName.text;
-
-        var serializer = new XmlSerializer(typeof(GraphData));
-        var stream = new FileStream(fileName, FileMode.Open);
-        var container = serializer.Deserialize(stream) as GraphData;
-        stream.Close();
+        vitalManager = AssetDatabase.LoadAssetAtPath<VitalFileManager>("Assets/VitalManager.asset");
+        string path = Application.dataPath;
+        // vitalManager = Resources.Load("VitalFileManager") as UnityScript;
+        vitalManager.Vitals = vitalData;
+        vitalManager.Save(path);
+        print("saved" + path);
     }
 }

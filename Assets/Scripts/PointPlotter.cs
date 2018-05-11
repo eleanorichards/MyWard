@@ -29,6 +29,13 @@ public class PointPlotter : MonoBehaviour
     {
     }
 
+    private void OnEnable()
+    {
+        lineRend = GameObject.Find("GraphLine").GetComponent<LineRenderer>();
+        graphHolder = GameObject.Find("GraphCanvas").GetComponent<AxisGen>();
+        graphPoint = Resources.Load("GraphPoint") as GameObject;
+    }
+
     /// <summary>
     /// translates click in world space to graph space
     /// </summary>
