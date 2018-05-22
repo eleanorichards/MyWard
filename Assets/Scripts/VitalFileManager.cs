@@ -5,15 +5,19 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-[CreateAssetMenu(fileName = "Data", menuName = "Inventory/List", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "Inventory/List", order = 1)]
+[XmlRoot("VitalObjectContainer")]
 public class VitalFileManager : ScriptableObject
 {
-    [XmlArray("Vitals"), XmlArrayItem("Vital")]
+    [XmlElement("Vital")]
     public VitalData[] Vitals;
 
     public void Save(string path)
     {
         var serializer = new XmlSerializer(typeof(VitalFileManager));
+        //System.IO.StringReader stringReader = new System.IO.StringReader(textAsset.text);
+        //stringReader.Read(); // skip BOM
+        //System.Xml.XmlReader reader = System.Xml.XmlReader.Create(stringReader);
         using (var stream = new FileStream(path, FileMode.Create))
         {
             serializer.Serialize(stream, this);

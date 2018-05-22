@@ -13,7 +13,7 @@ public class VitalData
     [XmlAttribute("name")]
     public string Name;
 
-    public Text vitalInfo;
+    public string vitalInfo;
 }
 
 //[XmlRoot("VitalCollection")]
@@ -26,16 +26,7 @@ public class VitalData
 
 public class ExportImport : MonoBehaviour
 {
-    private Text scenarioLoadName;
     public VitalData[] vitalData;
-
-    private Text scenarioName;
-    private Text drugName;
-    private Text drugDose;
-
-    private Vector2[] drugData;
-    private int[,] timeScale;
-    public int[,] vitalScale;
 
     private VitalFileManager vitalManager;
 
@@ -47,7 +38,7 @@ public class ExportImport : MonoBehaviour
     public static void CreateMyAsset()
     {
         VitalFileManager asset = ScriptableObject.CreateInstance<VitalFileManager>();
-        AssetDatabase.CreateAsset(asset, "Assets/VitalManager.asset");
+        AssetDatabase.CreateAsset(asset, "Assets/VitalManager.xml");
         AssetDatabase.SaveAssets();
 
         EditorUtility.FocusProjectWindow();
@@ -63,11 +54,17 @@ public class ExportImport : MonoBehaviour
     //vitalData[5]  //vital units
     public void SaveVital()
     {
-        vitalManager = AssetDatabase.LoadAssetAtPath<VitalFileManager>("Assets/VitalManager.asset");
+        //vitalManager = Resources.Load("VitalManager.xml") as VitalFileManager;
+        //vitalManager = AssetDatabase.LoadAssetAtPath<VitalFileManager>("Assets/VitalManager.asset");
+        /*
+           TextAsset textAsset = (TextAsset) Resources.Load("MyXMLFile");
+           XmlDocument xmldoc = new XmlDocument ();
+           xmldoc.LoadXml ( textAsset.text );
+        */
         string path = Application.dataPath;
-        // vitalManager = Resources.Load("VitalFileManager") as UnityScript;
+        vitalManager = VitalFileManager.Load(Path.Combine(path, "VitalManager.xml"));
         vitalManager.Vitals = vitalData;
-        vitalManager.Save(path);
+        vitalManager.Save(Path.Combine(path, "VitalManager.xml"));
         print("saved" + path);
     }
 }

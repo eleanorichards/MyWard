@@ -1,18 +1,11 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3919fc05bd9ad8146a05e0fbdadc6475, type: 3}
-  m_Name: VitalManager
-  m_EditorClassIdentifier: 
-  Vitals:
-  - Name: ANME
-    vitalInfo: {fileID: 0}
-  - Name: descr
-    vitalInfo: {fileID: 0}
+<?xml version="1.0" encoding="Windows-1252"?>
+<VitalObjectCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <name>VitalManager</name>
+  <hideFlags>None</hideFlags>
+  <Vital name="NAME">
+    <vitalInfo>blood</vitalInfo>
+  </Vital>
+  <Vital name="DESCRIPTION">
+    <vitalInfo>juicy</vitalInfo>
+  </Vital>
+</VitalObjectCollection>
