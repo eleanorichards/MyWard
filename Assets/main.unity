@@ -2682,6 +2682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 698178071}
   - component: {fileID: 698178070}
+  - component: {fileID: 698178072}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -2731,6 +2732,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698178072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 698178069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a0a99872cc20940ac37477f4dd47ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitalName: {fileID: 2089778690}
+  vitalInfo: {fileID: 1098150911}
+  vitalMinStatus: {fileID: 1281697898}
+  vitalMaxStatus: {fileID: 283479250}
+  vitalUnits: {fileID: 1127945088}
 --- !u!1 &709794145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2807,8 +2824,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 576531808}
-        m_MethodName: SaveVital
+      - m_Target: {fileID: 698178072}
+        m_MethodName: SaveVitals
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6381,7 +6398,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1782157520}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

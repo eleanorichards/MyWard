@@ -4,7 +4,12 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+using UnityEngine.UI;
 
+/// <summary>
+/// Taken and adaptedfrom the Unify Community Wiki
+/// http://wiki.unity3d.com/index.php/Save_and_Load_from_XML
+/// </summary>
 public class XMLManager : MonoBehaviour
 {
     // An example where the encoding can be found is at
@@ -17,80 +22,100 @@ public class XMLManager : MonoBehaviour
 
     private bool _ShouldSave, _ShouldLoad, _SwitchSave, _SwitchLoad;
     private string _FileLocation, _FileName;
-    public GameObject _Player;
+
+    //public GameObject _Player;
     private UserData myData;
-    private string _PlayerName;
+
     private string _data;
 
-    private Vector3 VPosition;
+    //Vital Info
+    [Header("Vital Info")]
+    public Text vitalName;
 
-    // When the EGO is instansiated the Start will trigger
-    // so we setup our initial values for our local members
+    public Text vitalInfo;
+
+    public Text vitalMinStatus;
+    public Text vitalMaxStatus;
+    public Text vitalUnits;
+
     private void Start()
     {
-        // We setup our rectangles for our messages
-        _Save = new Rect(10, 80, 100, 20);
-        _Load = new Rect(10, 100, 100, 20);
-        _SaveMSG = new Rect(10, 120, 400, 40);
-        _LoadMSG = new Rect(10, 140, 400, 40);
-
-        // Where we want to save and load to and from
+        // Where we want to save and load to and from - persistant data path at Assets/...
         _FileLocation = Application.dataPath;
         _FileName = "SaveData.xml";
-
-        // for now, lets just set the name to Joe Schmoe
-        _PlayerName = "Joe Schmoe";
 
         // we need soemthing to store the information into
         myData = new UserData();
     }
 
-    private void Update()
-    { }
-
-    private void OnGUI()
+    public void SaveVitals()
     {
-        //***************************************************
-        // Loading The Info...
-        // **************************************************
-        if (GUI.Button(_Load, "Load"))
-        {
-            GUI.Label(_LoadMSG, "Loading from: " + _FileLocation);
-            // Load our UserData into myData
-            LoadXML();
-            if (_data.ToString() != "")
-            {
-                // notice how I use a reference to type (UserData) here, you need this
-                // so that the returned object is converted into the correct type
-                myData = (UserData)DeserializeObject(_data);
-                // set the players position to the data we loaded
-                VPosition = new Vector3(myData._iUser.x, myData._iUser.y, myData._iUser.z);
-                _Player.transform.position = VPosition;
-                // just a way to show that we loaded in ok
-                Debug.Log(myData._iUser.name);
-            }
-        }
+        //Get vital Info from GUI
 
-        //***************************************************
-        // Saving The Info...
-        // **************************************************
-        if (GUI.Button(_Save, "Save"))
-        {
-            GUI.Label(_SaveMSG, "Saving to: " + _FileLocation);
-            myData._iUser.x = _Player.transform.position.x;
-            myData._iUser.y = _Player.transform.position.y;
-            myData._iUser.z = _Player.transform.position.z;
-            myData._iUser.name = _PlayerName;
+        myData._vitalDat.name = vitalName.text;
+        myData._vitalDat.info = vitalInfo.text;
+        myData._vitalDat.minStatus = vitalMinStatus.text;
+        myData._vitalDat.maxStatus = vitalMaxStatus.text;
+        myData._vitalDat.units = vitalUnits.text;
 
-            // Time to creat our XML!
-            _data = SerializeObject(myData);
-            // This is the final resulting XML from the serialization process
-            CreateXML();
-            Debug.Log(_data);
+        // serialize UserData here, to empty string
+        _data = SerializeObject(myData);
+        // This is the final resulting XML from the serialization process
+        CreateXML();
+        Debug.Log(_data);
+    }
+
+    public void LoadVitals()
+    {
+        LoadXML();
+        if (_data.ToString() != "")
+        {
+            // notice how I use a reference UserData here, deserialize from saved string
+            myData = (UserData)DeserializeObject(_data);
+
+            Debug.Log(myData._vitalDat.name);
         }
     }
 
-    /* The following metods came from the referenced URL */
+    //private void OnGUI()
+    //{
+    //    ***************************************************
+    //     Loading The Info...
+    //     **************************************************
+    //    if (GUI.Button(_Load, "Load"))
+    //    {
+    //        GUI.Label(_LoadMSG, "Loading from: " + _FileLocation);
+    //        // Load our UserData into myData
+    //        LoadXML();
+    //        if (_data.ToString() != "")
+    //        {
+    //            // notice how I use a reference UserData here, deserialize from saved string
+    //            myData = (UserData)DeserializeObject(_data);
+
+    //            Debug.Log(myData._vitalDat.name);
+    //        }
+    //    }
+
+    //    ***************************************************
+    //     Saving The Info...
+    //     **************************************************
+    //    if (GUI.Button(_Save, "Save"))
+    //    {
+    //        GUI.Label(_SaveMSG, "Saving to: " + _FileLocation);
+    //        //Get vital Info from GUI
+    //        myData._vitalDat.name = vitalName.text;
+    //        myData._vitalDat.info = vitalInfo.text;
+
+    //        // serialize UserData here, to empty string
+    //        _data = SerializeObject(myData);
+    //        // This is the final resulting XML from the serialization process
+    //        CreateXML();
+    //        Debug.Log(_data);
+    //    }
+    //}
+
+    /* The following methods came from the referenced URL
+     * without these you get: "... encoding whitespace line 0 space 1 etc... error */
 
     private string UTF8ByteArrayToString(byte[] characters)
     {
@@ -161,17 +186,18 @@ public class XMLManager : MonoBehaviour
 public class UserData
 {
     // We have to define a default instance of the structure
-    public DemoData _iUser;
+    public VitalData _vitalDat;
 
     // Default constructor doesn't really do anything at the moment
     public UserData() { }
 
     // Anything we want to store in the XML file, we define it here
-    public struct DemoData
+    public struct VitalData
     {
-        public float x;
-        public float y;
-        public float z;
         public string name;
+        public string info;
+        public string minStatus;
+        public string maxStatus;
+        public string units;
     }
 }

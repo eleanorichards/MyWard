@@ -29,8 +29,8 @@ public class VitalFileManager : ScriptableObject
         var serializer = new XmlSerializer(typeof(VitalFileManager));
         using (var stream = new FileStream(path, FileMode.Open))
         {
-            using (StreamReader reader = new StreamReader(path, new System.Text.UTF8Encoding(false)))
-                return serializer.Deserialize(stream) as VitalFileManager;
+            //using (StreamReader reader = new StreamReader(path, new System.Text.UTF8Encoding(false)))
+            return serializer.Deserialize(stream) as VitalFileManager;
         }
     }
 
