@@ -1433,7 +1433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &414713779
 Transform:
   m_ObjectHideFlags: 0
@@ -1998,7 +1998,6 @@ GameObject:
   - component: {fileID: 576531806}
   - component: {fileID: 576531805}
   - component: {fileID: 576531804}
-  - component: {fileID: 576531808}
   m_Layer: 5
   m_Name: MenuCanvas
   m_TagString: Untagged
@@ -2085,22 +2084,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &576531808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 576531803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 066720e089d83c2488bba751e18165e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vitalData:
-  - Name: NAME
-    vitalInfo: blood
-  - Name: DESCRIPTION
-    vitalInfo: juicy
 --- !u!1 &577017677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2748,6 +2731,11 @@ MonoBehaviour:
   vitalMinStatus: {fileID: 1281697898}
   vitalMaxStatus: {fileID: 283479250}
   vitalUnits: {fileID: 1127945088}
+  drugName: {fileID: 1419117522}
+  drugInfo: {fileID: 697174047}
+  drugMinDose: {fileID: 167407198}
+  drugMaxDose: {fileID: 974784969}
+  drugUnits: {fileID: 770979542}
 --- !u!1 &709794145
 GameObject:
   m_ObjectHideFlags: 0
@@ -3538,8 +3526,8 @@ RectTransform:
   m_Father: {fileID: 532366993}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000029802322, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3651,7 +3639,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 822462559}
   m_HandleRect: {fileID: 822462558}
   m_Direction: 0
-  m_Value: 0.5
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3722,8 +3710,8 @@ RectTransform:
   m_Father: {fileID: 48622319}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3333333}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3778,7 +3766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &861559665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4618,7 +4606,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1028125080}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 698178072}
+        m_MethodName: SaveDrug
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1028125080
@@ -4758,8 +4757,8 @@ RectTransform:
   m_Father: {fileID: 1222451858}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.00000013411045, y: 0}
-  m_AnchorMax: {x: 0.99999994, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5350,8 +5349,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1043730869}
   m_HandleRect: {fileID: 1043730868}
   m_Direction: 0
-  m_Value: 0.75
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6398,7 +6397,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1782157520}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999998
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7499,8 +7498,8 @@ RectTransform:
   m_Father: {fileID: 1616746510}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.33333337}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -38,6 +38,14 @@ public class XMLManager : MonoBehaviour
     public Text vitalMaxStatus;
     public Text vitalUnits;
 
+    [Header("Drug Info")]
+    public Text drugName;
+
+    public Text drugInfo;
+    public Text drugMinDose;
+    public Text drugMaxDose;
+    public Text drugUnits;
+
     private void Start()
     {
         // Where we want to save and load to and from - persistant data path at Assets/...
@@ -58,6 +66,22 @@ public class XMLManager : MonoBehaviour
         myData._vitalDat.maxStatus = vitalMaxStatus.text;
         myData._vitalDat.units = vitalUnits.text;
 
+        // serialize UserData here, to empty string
+        _data = SerializeObject(myData);
+        // This is the final resulting XML from the serialization process
+        CreateXML();
+        Debug.Log(_data);
+    }
+
+    public void SaveDrug()
+    {
+        //Get vital Info from GUI
+
+        myData._drugDat.name = drugName.text;
+        myData._drugDat.info = drugInfo.text;
+        myData._drugDat.minDose = drugMinDose.text;
+        myData._drugDat.maxDose = drugMaxDose.text;
+        myData._drugDat.units = drugUnits.text;
         // serialize UserData here, to empty string
         _data = SerializeObject(myData);
         // This is the final resulting XML from the serialization process
@@ -156,6 +180,7 @@ public class XMLManager : MonoBehaviour
     // Finally our save and load methods for the file itself
     private void CreateXML()
     {
+        //need to load current file & append
         StreamWriter writer;
         FileInfo t = new FileInfo(_FileLocation + "\\" + _FileName);
         if (!t.Exists)
@@ -164,7 +189,7 @@ public class XMLManager : MonoBehaviour
         }
         else
         {
-            t.Delete();
+            //t.Delete();
             writer = t.CreateText();
         }
         writer.Write(_data);
@@ -188,6 +213,8 @@ public class UserData
     // We have to define a default instance of the structure
     public VitalData _vitalDat;
 
+    public DrugData _drugDat;
+
     // Default constructor doesn't really do anything at the moment
     public UserData() { }
 
@@ -198,6 +225,16 @@ public class UserData
         public string info;
         public string minStatus;
         public string maxStatus;
+        public string units;
+    }
+
+    public struct DrugData
+    {
+        public string name;
+        public string info;
+        public string minDose;
+        public string maxDose;
+        public string vitalAffected;
         public string units;
     }
 }
