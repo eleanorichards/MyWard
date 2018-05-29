@@ -3,7 +3,7 @@
   <_vitalDat />
   <_drugDat>
     <name>
-      HH
+      HHiii
     </name>
     <info>GG</info>
     <minDose>D</minDose>
@@ -12,6 +12,4 @@
       F
     </units>
   </_drugDat>
-</UserData>﻿<?xml version="1.0" encoding="utf-8"?><UserData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><_vitalDat><name>
-sdfg</name><info>adfg</info><minStatus>sdf</minStatus><maxStatus>fds</maxStatus><units>aSD
-</units></_vitalDat><_drugDat /></UserData>
+</UserData>

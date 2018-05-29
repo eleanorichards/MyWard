@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public Text drugName;
-    public Text drugDosage;
-    public Text drugUnits;
-    public Text minTime;
-    public Text maxTime;
-    public Text minVital;
-    public Text maxVital;
+    //public Text drugName;
+    //public Text drugDosage;
+    //public Text drugUnits;
+    //public Text minTime;
+    //public Text maxTime;
+    //public Text minVital;
+    //public Text maxVital;
 
     private GraphData _GD;
 
@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     //Vector2[] _drugData, float _drugDose, int[,] _timeScale, int[,] _vitalScale, string _vitalName, string _drugName;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         //tabs = new GameObject[3];
         tabPages[0].SetActive(true);
@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 

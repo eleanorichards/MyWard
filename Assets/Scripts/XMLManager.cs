@@ -59,31 +59,37 @@ public class XMLManager : MonoBehaviour
     public void SaveVitals()
     {
         //Get vital Info from GUI
+        for (int i = 0; i < myData._vitalDat.Length; i++)
+        {
+            myData._vitalDat[i].name = "\n" + vitalName.text;
+            myData._vitalDat[i].info = vitalInfo.text;
+            myData._vitalDat[i].minStatus = vitalMinStatus.text;
+            myData._vitalDat[i].maxStatus = vitalMaxStatus.text;
+            myData._vitalDat[i].units = vitalUnits.text + "\n";
 
-        myData._vitalDat.name = vitalName.text;
-        myData._vitalDat.info = vitalInfo.text;
-        myData._vitalDat.minStatus = vitalMinStatus.text;
-        myData._vitalDat.maxStatus = vitalMaxStatus.text;
-        myData._vitalDat.units = vitalUnits.text;
+            // serialize UserData here, to empty string
+            _data = SerializeObject(myData, true);
+            // This is the final resulting XML from the serialization process
+            CreateXML();
+            Debug.Log(_data);
+        }
+    }
 
-        // serialize UserData here, to empty string
-        _data = SerializeObject(myData);
-        // This is the final resulting XML from the serialization process
-        CreateXML();
-        Debug.Log(_data);
+    private void LoadVitalArray()
+    {
     }
 
     public void SaveDrug()
     {
         //Get vital Info from GUI
 
-        myData._drugDat.name = drugName.text;
+        myData._drugDat.name = "\n" + drugName.text;
         myData._drugDat.info = drugInfo.text;
         myData._drugDat.minDose = drugMinDose.text;
         myData._drugDat.maxDose = drugMaxDose.text;
-        myData._drugDat.units = drugUnits.text;
+        myData._drugDat.units = drugUnits.text + "\n";
         // serialize UserData here, to empty string
-        _data = SerializeObject(myData);
+        _data = SerializeObject(myData, true);
         // This is the final resulting XML from the serialization process
         CreateXML();
         Debug.Log(_data);
@@ -94,10 +100,10 @@ public class XMLManager : MonoBehaviour
         LoadXML();
         if (_data.ToString() != "")
         {
-            // notice how I use a reference UserData here, deserialize from saved string
+            //use a referenced UserData here, deserialize from saved string
             myData = (UserData)DeserializeObject(_data);
 
-            Debug.Log(myData._vitalDat.name);
+            Debug.Log(myData._vitalDat[0].name);
         }
     }
 
@@ -156,15 +162,18 @@ public class XMLManager : MonoBehaviour
     }
 
     // Here we serialize our UserData object of myData
-    private string SerializeObject(object pObject)
+    private string SerializeObject(object pObject, bool newFile)
     {
         string XmlizedString = null;
-        MemoryStream memoryStream = new MemoryStream();
-        XmlSerializer xs = new XmlSerializer(typeof(UserData));
-        XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
-        xs.Serialize(xmlTextWriter, pObject);
-        memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
-        XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
+        if (newFile)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            XmlSerializer xs = new XmlSerializer(typeof(UserData));
+            XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
+            xs.Serialize(xmlTextWriter, pObject);
+            memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
+            XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
+        }
         return XmlizedString;
     }
 
@@ -189,10 +198,12 @@ public class XMLManager : MonoBehaviour
         }
         else
         {
-            //t.Delete();
+            t.Delete();
+            //writer = t.AppendText();
             writer = t.CreateText();
         }
         writer.Write(_data);
+        //writer.Write(_data);
         writer.Close();
         Debug.Log("File written.");
     }
@@ -200,6 +211,7 @@ public class XMLManager : MonoBehaviour
     private void LoadXML()
     {
         StreamReader r = File.OpenText(_FileLocation + "\\" + _FileName);
+        // string info = r.ReadBlock('a', 2, 3);
         string _info = r.ReadToEnd();
         r.Close();
         _data = _info;
@@ -211,7 +223,7 @@ public class XMLManager : MonoBehaviour
 public class UserData
 {
     // We have to define a default instance of the structure
-    public VitalData _vitalDat;
+    public VitalData[] _vitalDat;
 
     public DrugData _drugDat;
 
@@ -228,6 +240,7 @@ public class UserData
         public string units;
     }
 
+    [XmlRoot("DrugData")]
     public struct DrugData
     {
         public string name;
