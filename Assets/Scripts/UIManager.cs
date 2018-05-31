@@ -13,17 +13,21 @@ public class UIManager : MonoBehaviour
     //public Text minVital;
     //public Text maxVital;
 
-    private GraphData _GD;
+    private XMLManager xmlManager;
 
     public GameObject[] tabPages;
     public GameObject[] tabs;
     public Sprite[] tabGraphics;
 
-    //Vector2[] _drugData, float _drugDose, int[,] _timeScale, int[,] _vitalScale, string _vitalName, string _drugName;
+    public Dropdown drugDropDown;
+    public Dropdown vitalDropDown;
 
     // Use this for initialization
     private void Start()
     {
+        xmlManager = GetComponent<XMLManager>();
+        xmlManager.PopulateDrugDD();
+        xmlManager.PopulateVitalDD();
         //tabs = new GameObject[3];
         tabPages[0].SetActive(true);
         tabPages[1].SetActive(false);
@@ -78,5 +82,31 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void UpdateVitalSV(VitalContainer _vitalData)
+    {
+        vitalDropDown = GameObject.Find("VitalDD").GetComponent<Dropdown>();
+        vitalDropDown.ClearOptions();
+        List<string> vitalNames = new List<string>();
+        //LOADXML
+        foreach (VitalContainer.VitalData vitalData in _vitalData._vitalDat)
+        {
+            vitalNames.Add(vitalData.name.Trim());
+        }
+        vitalDropDown.AddOptions(vitalNames);
+    }
+
+    public void UpdateDrugSV(DrugContainer _drugData)
+    {
+        drugDropDown = GameObject.Find("DrugDD").GetComponent<Dropdown>();
+        drugDropDown.ClearOptions();
+        List<string> drugNames = new List<string>();
+
+        foreach (DrugContainer.DrugData drugData in _drugData._drugDat)
+        {
+            drugNames.Add(drugData.name.Trim());
+        }
+        drugDropDown.AddOptions(drugNames);
     }
 }

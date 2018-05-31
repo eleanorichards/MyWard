@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DrugContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <_drugDat>
+    <DrugData>
+      <name>
+        fdd
+      </name>
+      <info>ddd</info>
+      <minDose>sss</minDose>
+      <maxDose>d</maxDose>
+      <units>
+        f
+      </units>
+    </DrugData>
+    <DrugData>
+      <name>
+        benadryl
+      </name>
+      <info>boop</info>
+      <minDose>24</minDose>
+      <maxDose>64</maxDose>
+      <units>
+        mmbl
+      </units>
+    </DrugData>
+  </_drugDat>
+</DrugContainer>
