@@ -1,43 +1,137 @@
-﻿<?xml version="1.0" encoding="utf-8"?><VitalContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><_vitalDat><VitalData><name>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VitalContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <_vitalDat>
+    <VitalData>
+      <name>
         zxvc
-      </name><info>xz\</info><minStatus>xc</minStatus><maxStatus>x</maxStatus><units>
+      </name>
+      <info>xz\</info>
+      <minStatus>xc</minStatus>
+      <maxStatus>x</maxStatus>
+      <units>
         z
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         zxvc
-      </name><info>xz\</info><minStatus>xc</minStatus><maxStatus>sdd</maxStatus><units>
+      </name>
+      <info>xz\</info>
+      <minStatus>xc</minStatus>
+      <maxStatus>sdd</maxStatus>
+      <units>
         sssa
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         isthisworking
-      </name><info>mayb</info><minStatus>dont</minStatus><maxStatus>get</maxStatus><units>
+      </name>
+      <info>mayb</info>
+      <minStatus>dont</minStatus>
+      <maxStatus>get</maxStatus>
+      <units>
         exited
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         isthisworking
-      </name><info>mayb</info><minStatus>dont</minStatus><maxStatus>get</maxStatus><units>
+      </name>
+      <info>mayb</info>
+      <minStatus>dont</minStatus>
+      <maxStatus>get</maxStatus>
+      <units>
         exited
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         isthisworking
-      </name><info>mayb</info><minStatus>dont</minStatus><maxStatus>get</maxStatus><units>
+      </name>
+      <info>mayb</info>
+      <minStatus>dont</minStatus>
+      <maxStatus>get</maxStatus>
+      <units>
         excited
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         sd
-      </name><info>ds</info><minStatus>asd</minStatus><maxStatus>ds</maxStatus><units>
+      </name>
+      <info>ds</info>
+      <minStatus>asd</minStatus>
+      <maxStatus>ds</maxStatus>
+      <units>
         as
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         hehehehehehe
-      </name><info>f</info><minStatus>g</minStatus><maxStatus>f</maxStatus><units>
+      </name>
+      <info>f</info>
+      <minStatus>g</minStatus>
+      <maxStatus>f</maxStatus>
+      <units>
         d
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         gf
-      </name><info>h</info><minStatus>g</minStatus><maxStatus>d</maxStatus><units>
+      </name>
+      <info>h</info>
+      <minStatus>g</minStatus>
+      <maxStatus>d</maxStatus>
+      <units>
         f
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         f
-      </name><info>d</info><minStatus>s</minStatus><maxStatus>d</maxStatus><units>
+      </name>
+      <info>d</info>
+      <minStatus>s</minStatus>
+      <maxStatus>d</maxStatus>
+      <units>
         f
-      </units></VitalData><VitalData><name>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
         sdfy
-      </name><info>ytr</info><minStatus>wret</minStatus><maxStatus>yt</maxStatus><units>
+      </name>
+      <info>ytr</info>
+      <minStatus>wret</minStatus>
+      <maxStatus>yt</maxStatus>
+      <units>
         rwrw
-      </units></VitalData><VitalData><name>
-A new vital</name><info>na</info><minStatus>2</minStatus><maxStatus>55</maxStatus><units>mm
-</units></VitalData></_vitalDat></VitalContainer>
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
+        A new vital
+      </name>
+      <info>na</info>
+      <minStatus>2</minStatus>
+      <maxStatus>55</maxStatus>
+      <units>
+        mm
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
+        hello
+      </name>
+      <info>new</info>
+      <minStatus>s</minStatus>
+      <maxStatus>d</maxStatus>
+      <units>
+        as
+      </units>
+    </VitalData>
+  </_vitalDat>
+</VitalContainer>

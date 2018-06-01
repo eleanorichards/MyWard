@@ -5,13 +5,23 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    //public Text drugName;
-    //public Text drugDosage;
-    //public Text drugUnits;
-    //public Text minTime;
-    //public Text maxTime;
-    //public Text minVital;
-    //public Text maxVital;
+    //Vital Info
+    [Header("Vital Info")]
+    public InputField vitalName;
+
+    public InputField vitalInfo;
+
+    public InputField vitalMinStatus;
+    public InputField vitalMaxStatus;
+    public InputField vitalUnits;
+
+    [Header("Drug Info")]
+    public InputField drugName;
+
+    public InputField drugInfo;
+    public InputField drugMinDose;
+    public InputField drugMaxDose;
+    public InputField drugUnits;
 
     private XMLManager xmlManager;
 
@@ -19,8 +29,8 @@ public class UIManager : MonoBehaviour
     public GameObject[] tabs;
     public Sprite[] tabGraphics;
 
-    public Dropdown drugDropDown;
-    public Dropdown vitalDropDown;
+    private Dropdown drugDropDown;
+    private Dropdown vitalDropDown;
 
     // Use this for initialization
     private void Start()
@@ -28,7 +38,6 @@ public class UIManager : MonoBehaviour
         xmlManager = GetComponent<XMLManager>();
         xmlManager.PopulateDrugDD();
         xmlManager.PopulateVitalDD();
-        //tabs = new GameObject[3];
         tabPages[0].SetActive(true);
         tabPages[1].SetActive(false);
         tabPages[2].SetActive(false);
@@ -81,6 +90,42 @@ public class UIManager : MonoBehaviour
 
             default:
                 break;
+        }
+    }
+
+    public void UpdateVitalInputFields(VitalContainer _vitalData)
+    {
+        List<Dropdown.OptionData> menuOptions = vitalDropDown.GetComponent<Dropdown>().options;
+
+        foreach (VitalContainer.VitalData vitalData in _vitalData._vitalDat)
+        {
+            if (menuOptions[vitalDropDown.value].text == vitalData.name.Trim())
+            {
+                print(vitalData.info.Trim());
+                vitalName.text = vitalData.name.Trim();
+                vitalInfo.text = vitalData.info.Trim();
+                vitalMinStatus.text = vitalData.minStatus.Trim();
+                vitalMaxStatus.text = vitalData.maxStatus.Trim();
+                vitalUnits.text = vitalData.units.Trim();
+            }
+        }
+    }
+
+    public void UpdateDrugInputFields(DrugContainer _drugData)
+    {
+        List<Dropdown.OptionData> menuOptions = drugDropDown.GetComponent<Dropdown>().options;
+
+        foreach (DrugContainer.DrugData drugData in _drugData._drugDat)
+        {
+            if (menuOptions[drugDropDown.value].text == drugData.name.Trim())
+            {
+                print(drugData.info.Trim());
+                drugName.text = drugData.name.Trim();
+                drugInfo.text = drugData.info.Trim();
+                vitalMinStatus.text = drugData.minDose.Trim();
+                vitalMaxStatus.text = drugData.maxDose.Trim();
+                vitalUnits.text = drugData.units.Trim();
+            }
         }
     }
 

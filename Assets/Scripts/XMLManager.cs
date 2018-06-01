@@ -90,12 +90,28 @@ public class XMLManager : MonoBehaviour
         uiManager.UpdateVitalSV(vitalContainerData);
     }
 
+    public void PopulateVitalFields()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadVitals();
+        uiManager.UpdateVitalInputFields(vitalContainerData);
+    }
+
     public void PopulateDrugDD()
     {
         if (!uiManager)
             uiManager = GetComponent<UIManager>();
         LoadDrugs();
         uiManager.UpdateDrugSV(drugContainerData);
+    }
+
+    public void PopulateDrugFields()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadDrugs();
+        uiManager.UpdateDrugInputFields(drugContainerData);
     }
 
     public void SaveDrug()
@@ -126,8 +142,6 @@ public class XMLManager : MonoBehaviour
         {
             //use a referenced UserData here, deserialize from saved string
             vitalContainerData = (VitalContainer)DeserializeObject(_vData, "VitalData.xml");
-
-            Debug.Log(vitalContainerData._vitalDat.Count);
         }
     }
 
