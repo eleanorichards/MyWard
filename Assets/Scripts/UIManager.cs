@@ -101,7 +101,6 @@ public class UIManager : MonoBehaviour
         {
             if (menuOptions[vitalDropDown.value].text == vitalData.name.Trim())
             {
-                print(vitalData.info.Trim());
                 vitalName.text = vitalData.name.Trim();
                 vitalInfo.text = vitalData.info.Trim();
                 vitalMinStatus.text = vitalData.minStatus.Trim();
@@ -129,7 +128,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateVitalSV(VitalContainer _vitalData)
+    public void DeleteVitalField()
+    {
+        xmlManager.DeleteVitalField(vitalName.text);
+    }
+
+    public void DeleteDrugField()
+    {
+        xmlManager.DeleteDrugField(drugName.text);
+    }
+
+    public void UpdateVitalDD(VitalContainer _vitalData)
     {
         vitalDropDown = GameObject.Find("VitalDD").GetComponent<Dropdown>();
         vitalDropDown.ClearOptions();
@@ -142,7 +151,7 @@ public class UIManager : MonoBehaviour
         vitalDropDown.AddOptions(vitalNames);
     }
 
-    public void UpdateDrugSV(DrugContainer _drugData)
+    public void UpdateDrugDD(DrugContainer _drugData)
     {
         drugDropDown = GameObject.Find("DrugDD").GetComponent<Dropdown>();
         drugDropDown.ClearOptions();

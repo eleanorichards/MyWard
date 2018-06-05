@@ -60,7 +60,7 @@ public class XMLManager : MonoBehaviour
         uiManager = GetComponent<UIManager>();
     }
 
-    public void SaveVitals()
+    public void SaveVital()
     {
         LoadVitals();
         //Get vital Info from GUI
@@ -80,38 +80,6 @@ public class XMLManager : MonoBehaviour
         CreateXML("VitalData.xml", _vData);
         PopulateVitalDD();
         Debug.Log(_vData);
-    }
-
-    public void PopulateVitalDD()
-    {
-        if (!uiManager)
-            uiManager = GetComponent<UIManager>();
-        LoadVitals();
-        uiManager.UpdateVitalSV(vitalContainerData);
-    }
-
-    public void PopulateVitalFields()
-    {
-        if (!uiManager)
-            uiManager = GetComponent<UIManager>();
-        LoadVitals();
-        uiManager.UpdateVitalInputFields(vitalContainerData);
-    }
-
-    public void PopulateDrugDD()
-    {
-        if (!uiManager)
-            uiManager = GetComponent<UIManager>();
-        LoadDrugs();
-        uiManager.UpdateDrugSV(drugContainerData);
-    }
-
-    public void PopulateDrugFields()
-    {
-        if (!uiManager)
-            uiManager = GetComponent<UIManager>();
-        LoadDrugs();
-        uiManager.UpdateDrugInputFields(drugContainerData);
     }
 
     public void SaveDrug()
@@ -135,6 +103,38 @@ public class XMLManager : MonoBehaviour
         Debug.Log(_dData);
     }
 
+    public void PopulateVitalDD()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadVitals();
+        uiManager.UpdateVitalDD(vitalContainerData);
+    }
+
+    public void PopulateDrugDD()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadDrugs();
+        uiManager.UpdateDrugDD(drugContainerData);
+    }
+
+    public void PopulateVitalFields()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadVitals();
+        uiManager.UpdateVitalInputFields(vitalContainerData);
+    }
+
+    public void PopulateDrugFields()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadDrugs();
+        uiManager.UpdateDrugInputFields(drugContainerData);
+    }
+
     public void LoadVitals()
     {
         LoadXML("VitalData.xml", _vData);
@@ -152,47 +152,47 @@ public class XMLManager : MonoBehaviour
         {
             //use a referenced UserData here, deserialize from saved string
             drugContainerData = (DrugContainer)DeserializeObject(_dData, "DrugData.xml");
-
-            Debug.Log(drugContainerData._drugDat.Count);
         }
     }
 
-    //private void OnGUI()
-    //{
-    //    ***************************************************
-    //     Loading The Info...
-    //     **************************************************
-    //    if (GUI.Button(_Load, "Load"))
-    //    {
-    //        GUI.Label(_LoadMSG, "Loading from: " + _FileLocation);
-    //        // Load our UserData into myData
-    //        LoadXML();
-    //        if (_data.ToString() != "")
-    //        {
-    //            // notice how I use a reference UserData here, deserialize from saved string
-    //            myData = (UserData)DeserializeObject(_data);
+    public void DeleteVitalField(string vitalName)
+    {
+        LoadVitals();
+        List<VitalContainer.VitalData> tempVitals = new List<VitalContainer.VitalData>();
 
-    //            Debug.Log(myData._vitalDat.name);
-    //        }
-    //    }
+        foreach (VitalContainer.VitalData vit in vitalContainerData._vitalDat)
+        {
+            if (vit.name.Trim() != vitalName)
+            {
+                tempVitals.Add(vit);
+            }
+        }
+        vitalContainerData._vitalDat = tempVitals;
+        _vData = SerializeObject(vitalContainerData, "VitalData.xml");
+        // This is the final resulting XML from the serialization process
+        CreateXML("VitalData.xml", _vData);
+        PopulateVitalDD();
+        PopulateVitalFields();
+    }
 
-    //    ***************************************************
-    //     Saving The Info...
-    //     **************************************************
-    //    if (GUI.Button(_Save, "Save"))
-    //    {
-    //        GUI.Label(_SaveMSG, "Saving to: " + _FileLocation);
-    //        //Get vital Info from GUI
-    //        myData._vitalDat.name = vitalName.text;
-    //        myData._vitalDat.info = vitalInfo.text;
-
-    //        // serialize UserData here, to empty string
-    //        _data = SerializeObject(myData);
-    //        // This is the final resulting XML from the serialization process
-    //        CreateXML();
-    //        Debug.Log(_data);
-    //    }
-    //}
+    public void DeleteDrugField(string drugName)
+    {
+        LoadDrugs();
+        List<DrugContainer.DrugData> tempDrugs = new List<DrugContainer.DrugData>();
+        foreach (DrugContainer.DrugData drug in drugContainerData._drugDat)
+        {
+            if (drug.name.Trim() != drugName)
+            {
+                tempDrugs.Add(drug);
+            }
+        }
+        drugContainerData._drugDat = tempDrugs;
+        _dData = SerializeObject(drugContainerData, "DrugData.xml");
+        // This is the final resulting XML from the serialization process
+        CreateXML("DrugData.xml", _dData);
+        PopulateDrugDD();
+        PopulateDrugFields();
+    }
 
     /* The following methods came from the referenced URL
      * without these you get: "... encoding whitespace line 0 space 1 etc... error */
@@ -282,7 +282,6 @@ public class XMLManager : MonoBehaviour
         //needs to be vData or dData
         _data = _info;
         SetData(_fileName, _data);
-        Debug.Log("File Read");
     }
 
     private void SetData(string filename, string data)
