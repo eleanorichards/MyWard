@@ -14,20 +14,14 @@ public class AxisGen : MonoBehaviour
 
     public TimeFormat timeFormat;
 
-    public enum Vital
-    {
-        LUNGS,
-        KIDNEY,
-        HEART
-    }
-
-    public Vital vital;
+    public float XShift;
+    public float YShift;
 
     [Header("Y Axis")]
     public string vitalName;
 
     public int smallMarkerNum;
-    public int maxVitalRate;
+    public float maxVitalRate;
 
     [Header("X Axis")]
     public int maxTime; //in minutes
@@ -49,11 +43,11 @@ public class AxisGen : MonoBehaviour
     private GameObject graphHolder;
     private GameObject canvas;
     private GameObject textBox;
-    private Text xAxisLabel;
-    private Text yAxisLabel;
+    // private Text xAxisLabel;
+    //private Text yAxisLabel;
 
-    private int number_spacing = 0;
-    private int label_spacing = 0;
+    private float number_spacing = 0;
+    private float label_spacing = 0;
     private float largeMarkerPos = 0.0f;
     private float smallMarkerPos = 0.0f;
     private float smallMarkerProgression = 0.0f;
@@ -75,8 +69,8 @@ public class AxisGen : MonoBehaviour
         ySmallMarker = Resources.Load("YSmallLabel") as GameObject;
         yLargerMarker = Resources.Load("YBigLabel") as GameObject;
         textBox = Resources.Load("TextBox") as GameObject;
-        xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
-        yAxisLabel = GameObject.Find("YLabel").GetComponent<Text>();
+        // xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
+        // yAxisLabel = GameObject.Find("YLabel").GetComponent<Text>();
         origin = graphHolder.transform.position;
 
         //INITIALISATION
@@ -97,7 +91,7 @@ public class AxisGen : MonoBehaviour
             SetTimeScale();
             DrawXMarkerLines();
             DrawAxis();
-            SetYScale();
+            //SetYScale();
             DrawYMarkerLines();
         }
     }
@@ -115,17 +109,17 @@ public class AxisGen : MonoBehaviour
         switch (timeFormat)
         {
             case TimeFormat.HOURS:
-                xAxisLabel.text = "Time (hrs)";
+                //xAxisLabel.text = "Time (hrs)";
                 label_spacing = (maxTime * 60) / 10;
                 break;
 
             case TimeFormat.MINUTES:
-                xAxisLabel.text = "Time (mins)";
+                //xAxisLabel.text = "Time (mins)";
                 label_spacing = (maxTime * 60) / 10;
                 break;
 
             case TimeFormat.SECONDS:
-                xAxisLabel.text = "Time (secs)";
+                // xAxisLabel.text = "Time (secs)";
                 number_spacing = maxTime / 100;
 
                 break;
@@ -140,17 +134,18 @@ public class AxisGen : MonoBehaviour
     private void DrawXMarkerLines()
     {
         int hour = 0;
-        largeMarkerPos = 0.0f;
+        largeMarkerPos = XShift;
         smallMarkersSet = false;
         smallMarkerProgression = 0.0f;
 
         for (int a = 0; a <= label_spacing; a += 6) //break in to hour intervals
         {
             smallMarkerPos = largeMarkerPos;
-            GameObject curTimeLabel = Instantiate(xLargeMarker, new Vector3(largeMarkerPos, 0.0f, 0.0f), Quaternion.identity);
-            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, -0.7f, 0.0f), Quaternion.identity);
+            GameObject curTimeLabel = Instantiate(xLargeMarker, new Vector3(largeMarkerPos, XShift, 0.0f), Quaternion.identity, graphHolder.transform);
+            xLargeMarker.GetComponent<LineRenderer>().SetPosition(0, new Vector3(transform.position.x, transform.position.y + 10));
+            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, XShift - 0.7f, 0.0f), Quaternion.identity, graphHolder.transform);
             largerMarkerLabel.GetComponent<Text>().text = hour.ToString();
-            largerMarkerLabel.transform.SetParent(graphHolder.transform);
+            //largerMarkerLabel.transform.SetParent(graphHolder.transform);
             largeMarkerPos += xEndPos.x / maxTime;
 
             if (!smallMarkersSet) //to ensure the gap starts at 0 each time
@@ -162,21 +157,21 @@ public class AxisGen : MonoBehaviour
             {
                 for (int b = 0; b < 6; b++) //break in to 10's of minutes
                 {
-                    GameObject curSmallLabel = Instantiate(xSmallMarker, new Vector3(smallMarkerPos, 0.0f, 0.0f), Quaternion.identity);
+                    GameObject curSmallLabel = Instantiate(xSmallMarker, new Vector3(smallMarkerPos, XShift, 0.0f), Quaternion.identity, graphHolder.transform);
                     if (b == 3)
                     {
-                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(smallMarkerPos, -0.5f, 0.0f), Quaternion.identity);
+                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(smallMarkerPos, XShift - 0.5f, 0.0f), Quaternion.identity, graphHolder.transform);
                         Text tempText = smallMarkerLabel.GetComponent<Text>();
                         tempText.fontSize = 12;
                         tempText.text = hour.ToString() + ":30";
-                        smallMarkerLabel.transform.SetParent(graphHolder.transform);
+                        //smallMarkerLabel.transform.SetParent(graphHolder.transform);
                     }
                     //add marker label
                     smallMarkerPos += smallMarkerProgression;
-                    curSmallLabel.transform.SetParent(graphHolder.transform);
+                    // curSmallLabel.transform.SetParent(graphHolder.transform);
                 }
             }
-            curTimeLabel.transform.SetParent(graphHolder.transform);
+            //curTimeLabel.transform.SetParent(graphHolder.transform);
 
             hour++;
         }
@@ -185,7 +180,7 @@ public class AxisGen : MonoBehaviour
     private void DrawYMarkerLines()
     {
         int yScaleVal = 0;
-        largeMarkerPos = 0.0f;
+        largeMarkerPos = YShift;
         smallMarkersSet = false;
         smallMarkerProgression = 0.0f;
         label_spacing = (maxVitalRate * 100) / 10; //WITH the * X
@@ -193,10 +188,12 @@ public class AxisGen : MonoBehaviour
         for (int a = 0; a <= label_spacing; a += 10) //break in to intervals //this number neds to CORRESPOND
         {
             smallMarkerPos = largeMarkerPos;
-            GameObject curTimeLabel = Instantiate(yLargerMarker, new Vector3(0.0f, largeMarkerPos, 0.0f), Quaternion.identity);
-            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(-0.6f, largeMarkerPos, 0.0f), Quaternion.identity);
+            GameObject curTimeLabel = Instantiate(yLargerMarker, new Vector3(XShift, largeMarkerPos, 0.0f), Quaternion.identity);
+            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(XShift - 0.6f, largeMarkerPos, 0.0f), Quaternion.identity);
             largerMarkerLabel.GetComponent<Text>().text = yScaleVal.ToString();
-            largerMarkerLabel.transform.SetParent(graphHolder.transform); largeMarkerPos += yEndPos.y / maxVitalRate;
+            largerMarkerLabel.transform.SetParent(graphHolder.transform);
+
+            largeMarkerPos += yEndPos.y / maxVitalRate;
 
             if (!smallMarkersSet) //to ensure the gap starts at 0 each time
             {
@@ -242,7 +239,7 @@ public class AxisGen : MonoBehaviour
 
     private void SetYScale()
     {
-        yAxisLabel.text = vitalName;
+        //yAxisLabel.text = vitalName;
     }
 
     public Vector2 ReturnDimensions()

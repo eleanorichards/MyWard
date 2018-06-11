@@ -1,7 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?><VitalContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><_vitalDat><VitalData><name>
-        A new vital
-      </name><info>na</info><minStatus>2</minStatus><maxStatus>55</maxStatus><units>
-        mm
-      </units></VitalData><VitalData><name>
-Heart Rate</name><info>na</info><minStatus>20</minStatus><maxStatus>300</maxStatus><units>bpm
-</units></VitalData></_vitalDat></VitalContainer>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VitalContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <_vitalDat>
+    <VitalData>
+      <name>
+        Heart Rate
+      </name>
+      <info>na</info>
+      <minStatus>20</minStatus>
+      <maxStatus>300</maxStatus>
+      <units>
+        bpm
+      </units>
+    </VitalData>
+    <VitalData>
+      <name>
+        Blood Pressure
+      </name>
+      <info>na</info>
+      <minStatus>120/80</minStatus>
+      <maxStatus>140/90</maxStatus>
+      <units>
+        mmHg
+      </units>
+    </VitalData>
+  </_vitalDat>
+</VitalContainer>

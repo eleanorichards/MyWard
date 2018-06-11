@@ -25,8 +25,11 @@ public class XMLManager : MonoBehaviour
 
     private DrugContainer drugContainerData;
 
+    private GraphContainer graphContainerData;
+
     private string _vData;
     private string _dData;
+    private string _gData;
 
     //Vital Info
     [Header("Vital Info")]
@@ -46,18 +49,56 @@ public class XMLManager : MonoBehaviour
     public Text drugMaxDose;
     public Text drugUnits;
 
+    [Header("Graph Info")]
+    public Dropdown gDrugName;
+
+    public Dropdown gVitalName;
+    public Vector2[] gGraphPoints;
+
+    //public Text
     private UIManager uiManager;
+
+    public PointPlotter graphData;
+    public AxisGen graphAxis;
 
     private void Start()
     {
         // Where we want to save and load to and from - persistant data path at Assets/...
         _FileLocation = Application.dataPath;
         //_FileName = "SaveData.xml";
-
+        graphData = GameObject.Find("Cursor").GetComponent<PointPlotter>();
         // we need soemthing to store the information into
         vitalContainerData = new VitalContainer();
         drugContainerData = new DrugContainer();
         uiManager = GetComponent<UIManager>();
+        PopulateGraphFields();
+    }
+
+    public void SaveGraphData()
+    {
+        GraphContainer.GraphData _tempDat = new GraphContainer.GraphData();
+        gGraphPoints = graphData.ReturnGraphPoints();
+
+        _tempDat.graphPoints = gGraphPoints;
+
+        graphContainerData._graphDat.Add(_tempDat);
+        _gData = SerializeObject(graphContainerData, "GraphData.xml");
+        CreateXML("GraphData.xml", _gData);
+        Debug.Log("Graph saved");
+    }
+
+    public void LoadGraphData(Dropdown yAxisDD, Dropdown xAxisDD)
+    {
+        //XAXISDD
+        List<Dropdown.OptionData> menuOptions = xAxisDD.GetComponent<Dropdown>().options;
+
+        foreach (DrugContainer.DrugData tempdrugData in drugContainerData._drugDat)
+        {
+            if (menuOptions[gDrugName.value].text == tempdrugData.name.Trim())
+            {
+                graphAxis.maxVitalRate = float.Parse(tempdrugData.maxDose);
+            }
+        }
     }
 
     public void SaveVital()
@@ -66,11 +107,11 @@ public class XMLManager : MonoBehaviour
         //Get vital Info from GUI
         VitalContainer.VitalData _tempDat = new VitalContainer.VitalData();
 
-        _tempDat.name = "\n" + vitalName.text;
+        _tempDat.name = vitalName.text;
         _tempDat.info = vitalInfo.text;
         _tempDat.minStatus = vitalMinStatus.text;
         _tempDat.maxStatus = vitalMaxStatus.text;
-        _tempDat.units = vitalUnits.text + "\n";
+        _tempDat.units = vitalUnits.text;
 
         vitalContainerData._vitalDat.Add(_tempDat);
 
@@ -87,11 +128,11 @@ public class XMLManager : MonoBehaviour
         LoadDrugs();
         DrugContainer.DrugData _tempDat = new DrugContainer.DrugData();
 
-        _tempDat.name = "\n" + drugName.text;
+        _tempDat.name = drugName.text;
         _tempDat.info = drugInfo.text;
         _tempDat.minDose = drugMinDose.text;
         _tempDat.maxDose = drugMaxDose.text;
-        _tempDat.units = drugUnits.text + "\n";
+        _tempDat.units = drugUnits.text;
 
         drugContainerData._drugDat.Add(_tempDat);
 
@@ -117,6 +158,17 @@ public class XMLManager : MonoBehaviour
             uiManager = GetComponent<UIManager>();
         LoadDrugs();
         uiManager.UpdateDrugDD(drugContainerData);
+    }
+
+    //Called on start, or drug/vital save
+    public void PopulateGraphFields()
+    {
+        if (!uiManager)
+            uiManager = GetComponent<UIManager>();
+        LoadDrugs();
+        LoadVitals();
+        uiManager.UpdateXAxisDD(drugContainerData);
+        uiManager.UpdateYAxisDD(vitalContainerData);
     }
 
     public void PopulateVitalFields()
@@ -152,6 +204,16 @@ public class XMLManager : MonoBehaviour
         {
             //use a referenced UserData here, deserialize from saved string
             drugContainerData = (DrugContainer)DeserializeObject(_dData, "DrugData.xml");
+        }
+    }
+
+    public void LoadGraph()
+    {
+        LoadXML("GraphData.xml", _gData);
+        if (_gData.ToString() != "")
+        {
+            //use a referenced GraphData here, deserialize from saved string
+            graphContainerData = (GraphContainer)DeserializeObject(_gData, "GraphData.xml");
         }
     }
 
@@ -225,7 +287,10 @@ public class XMLManager : MonoBehaviour
         {
             xs = new XmlSerializer(typeof(VitalContainer));
         }
-
+        else if (filename == "GraphData.xml")
+        {
+            xs = new XmlSerializer(typeof(GraphContainer));
+        }
         XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
         xs.Serialize(xmlTextWriter, pObject);
         memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
@@ -245,6 +310,10 @@ public class XMLManager : MonoBehaviour
         else if (filename == "VitalData.xml")
         {
             xs = new XmlSerializer(typeof(VitalContainer));
+        }
+        else if (filename == "GraphData.xml")
+        {
+            xs = new XmlSerializer(typeof(GraphContainer));
         }
         MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(pXmlizedString));
         XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
@@ -296,6 +365,10 @@ public class XMLManager : MonoBehaviour
                 _vData = data;
                 break;
 
+            case "GraphData.xml":
+                _gData = data;
+                break;
+
             default:
                 break;
         }
@@ -341,5 +414,21 @@ public class DrugContainer
         public string maxDose;
         public string vitalAffected;
         public string units;
+    }
+}
+
+public class GraphContainer
+{
+    public List<GraphData> _graphDat = new List<GraphData>();
+
+    public GraphContainer()
+    {
+    }
+
+    public struct GraphData
+    {
+        public string drugName;
+        public string vitalName;
+        public Vector2[] graphPoints;
     }
 }

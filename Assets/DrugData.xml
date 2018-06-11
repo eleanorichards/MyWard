@@ -1,3 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?><DrugContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><_drugDat><DrugData><name>
-benadryl</name><info>boop</info><minDose>3</minDose><maxDose>4</maxDose><units>rrm
-</units></DrugData></_drugDat></DrugContainer>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DrugContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <_drugDat>
+    <DrugData>
+      <name>
+        benadryl
+      </name>
+      <info>boop </info>
+      <minDose>3</minDose>
+      <maxDose>4</maxDose>
+      <units>
+        rrm
+      </units>
+    </DrugData>
+    <DrugData>
+      <name>
+        Insulin
+      </name>
+      <info>For blood sugar </info>
+      <minDose>20</minDose>
+      <maxDose>80</maxDose>
+      <units>
+        IU
+      </units>
+    </DrugData>
+  </_drugDat>
+</DrugContainer>

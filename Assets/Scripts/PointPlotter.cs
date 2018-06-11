@@ -70,7 +70,6 @@ public class PointPlotter : MonoBehaviour
                 {
                     points.Remove(points[i]);
                     Destroy(selected);
-                    // points.Sort();
                 }
             }
         }
@@ -92,5 +91,17 @@ public class PointPlotter : MonoBehaviour
         else
         {
         }
+    }
+
+    public Vector2[] ReturnGraphPoints()
+    {
+        int i = 0;
+        Vector2[] tempArray = new Vector2[points.Count];
+        foreach (GameObject point in points)
+        {
+            tempArray[i] = point.transform.position;
+            i++;
+        }
+        return tempArray;
     }
 }

@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
 
     private Dropdown drugDropDown;
     private Dropdown vitalDropDown;
+    public Dropdown xAxisDropDown;
+    public Dropdown yAxisDropdown;
 
     // Use this for initialization
     private void Start()
@@ -162,5 +164,30 @@ public class UIManager : MonoBehaviour
             drugNames.Add(drugData.name.Trim());
         }
         drugDropDown.AddOptions(drugNames);
+    }
+
+    public void UpdateXAxisDD(DrugContainer _drugData)
+    {
+        xAxisDropDown = GameObject.Find("xAxisDD").GetComponent<Dropdown>();
+        xAxisDropDown.ClearOptions();
+        List<string> drugNames = new List<string>();
+
+        foreach (DrugContainer.DrugData drugData in _drugData._drugDat)
+        {
+            drugNames.Add(drugData.name.Trim());
+        }
+        xAxisDropDown.AddOptions(drugNames);
+    }
+
+    public void UpdateYAxisDD(VitalContainer _vitalData)
+    {
+        yAxisDropdown = GameObject.Find("yAxisDD").GetComponent<Dropdown>();
+        yAxisDropdown.ClearOptions();
+        List<string> vitalNames = new List<string>();
+        foreach (VitalContainer.VitalData vitalData in _vitalData._vitalDat)
+        {
+            vitalNames.Add(vitalData.name.Trim());
+        }
+        yAxisDropdown.AddOptions(vitalNames);
     }
 }
