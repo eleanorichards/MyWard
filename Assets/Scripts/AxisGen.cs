@@ -38,7 +38,7 @@ public class AxisGen : MonoBehaviour
     private GameObject xLargeMarker;
 
     private GameObject ySmallMarker;
-    private GameObject yLargerMarker;
+    private GameObject yLargeMarker;
 
     private GameObject graphHolder;
     private GameObject canvas;
@@ -47,7 +47,9 @@ public class AxisGen : MonoBehaviour
     //private Text yAxisLabel;
 
     private float label_spacing = 0;
+    [Tooltip("difference between large lines")]
     private float largeMarkerPos = 0.0f;
+    [Tooltip("difference between small lines")]
     private float smallMarkerPos = 0.0f;
     private float smallMarkerProgression = 0.0f;
 
@@ -64,7 +66,7 @@ public class AxisGen : MonoBehaviour
         xSmallMarker = Resources.Load("XSmallLabel") as GameObject;
         xLargeMarker = Resources.Load("XBigLabel") as GameObject;
         ySmallMarker = Resources.Load("YSmallLabel") as GameObject;
-        yLargerMarker = Resources.Load("YBigLabel") as GameObject;
+        yLargeMarker = Resources.Load("YBigLabel") as GameObject;
         textBox = Resources.Load("TextBox") as GameObject;
         xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
         // yAxisLabel = GameObject.Find("YLabel").GetComponent<Text>();
@@ -126,11 +128,14 @@ public class AxisGen : MonoBehaviour
         for (int a = 0; a <= label_spacing; a += 6) //break in to hour intervals
         {
             smallMarkerPos = largeMarkerPos;
+
             GameObject curTimeLabel = Instantiate(xLargeMarker, new Vector3(largeMarkerPos, XShift, 0.0f), Quaternion.identity/*, graphHolder.transform*/);
-            curTimeLabel.GetComponent<LineRenderer>().SetPosition(0, new Vector3(xLargeMarker.transform.position.x, xLargeMarker.transform.position.y + 100));
             GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, XShift - 0.7f, 0.0f), Quaternion.identity/*, graphHolder.transform*/);
+
             largerMarkerLabel.GetComponent<Text>().text = hour.ToString();
             largerMarkerLabel.transform.SetParent(graphHolder.transform);
+
+
             largeMarkerPos += xEndPos.x / maxTime;
 
             if (!smallMarkersSet) //to ensure the gap starts at 0 each time
@@ -173,7 +178,7 @@ public class AxisGen : MonoBehaviour
         for (int a = 0; a <= label_spacing; a += 10) //break in to intervals //this number neds to CORRESPOND
         {
             smallMarkerPos = largeMarkerPos;
-            GameObject curTimeLabel = Instantiate(yLargerMarker, new Vector3(XShift, largeMarkerPos, 0.0f), Quaternion.identity);
+            GameObject curTimeLabel = Instantiate(yLargeMarker, new Vector3(XShift, largeMarkerPos, 0.0f), Quaternion.identity);
             GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(XShift - 0.6f, largeMarkerPos, 0.0f), Quaternion.identity);
             largerMarkerLabel.GetComponent<Text>().text = yScaleVal.ToString();
             largerMarkerLabel.transform.SetParent(graphHolder.transform);

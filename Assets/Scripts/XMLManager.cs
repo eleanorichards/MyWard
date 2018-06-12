@@ -87,20 +87,6 @@ public class XMLManager : MonoBehaviour
         Debug.Log("Graph saved");
     }
 
-    public void LoadGraphData(Dropdown yAxisDD, Dropdown xAxisDD)
-    {
-        //XAXISDD
-        List<Dropdown.OptionData> menuOptions = xAxisDD.GetComponent<Dropdown>().options;
-
-        foreach (DrugContainer.DrugData tempdrugData in drugContainerData._drugDat)
-        {
-            if (menuOptions[gDrugName.value].text == tempdrugData.name.Trim())
-            {
-                graphAxis.maxVitalRate = float.Parse(tempdrugData.maxDose);
-            }
-        }
-    }
-
     public void SaveVital()
     {
         LoadVitals();

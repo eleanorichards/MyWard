@@ -36,8 +36,8 @@ public class MouseControl : MonoBehaviour
         if (hit)
         {
             //Set mouse pos and text box vals
-            transform.localPosition = hit.point;
-            textBox.transform.position = new Vector2(hit.point.x, hit.point.y + 0.3f);
+            transform.position = Input.mousePosition;
+            textBox.transform.position = new Vector2(Input.mousePosition.x,Input.mousePosition.y + 0.3f);
             positionText.text = pointPlotter.ClickRecieved(hit.point).ToString();
 
             //Place point
