@@ -43,10 +43,9 @@ public class AxisGen : MonoBehaviour
     private GameObject graphHolder;
     private GameObject canvas;
     private GameObject textBox;
-    // private Text xAxisLabel;
+    private Text xAxisLabel;
     //private Text yAxisLabel;
 
-    private float number_spacing = 0;
     private float label_spacing = 0;
     private float largeMarkerPos = 0.0f;
     private float smallMarkerPos = 0.0f;
@@ -61,15 +60,13 @@ public class AxisGen : MonoBehaviour
     {
         //INITIALISATION
         graphHolder = GameObject.Find("Axis");
-        xAxis = GameObject.Find("xAxis").GetComponent<LineRenderer>();
-        yAxis = GameObject.Find("yAxis").GetComponent<LineRenderer>();
         canvas = GameObject.Find("GraphCanvas");
         xSmallMarker = Resources.Load("XSmallLabel") as GameObject;
         xLargeMarker = Resources.Load("XBigLabel") as GameObject;
         ySmallMarker = Resources.Load("YSmallLabel") as GameObject;
         yLargerMarker = Resources.Load("YBigLabel") as GameObject;
         textBox = Resources.Load("TextBox") as GameObject;
-        // xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
+        xAxisLabel = GameObject.Find("XLabel").GetComponent<Text>();
         // yAxisLabel = GameObject.Find("YLabel").GetComponent<Text>();
         origin = graphHolder.transform.position;
 
@@ -77,7 +74,6 @@ public class AxisGen : MonoBehaviour
         SetTimeScale();
         DrawXMarkerLines();
         DrawYMarkerLines();
-        DrawAxis();
     }
 
     private void FixedUpdate()
@@ -90,18 +86,9 @@ public class AxisGen : MonoBehaviour
             }
             SetTimeScale();
             DrawXMarkerLines();
-            DrawAxis();
             //SetYScale();
             DrawYMarkerLines();
         }
-    }
-
-    private void DrawAxis()
-    {
-        xAxis.SetPosition(0, origin);
-        yAxis.SetPosition(0, origin);
-        yAxis.SetPosition(yAxis.positionCount - 1, yEndPos);
-        xAxis.SetPosition(xAxis.positionCount - 1, xEndPos);
     }
 
     private void SetTimeScale()
@@ -109,26 +96,24 @@ public class AxisGen : MonoBehaviour
         switch (timeFormat)
         {
             case TimeFormat.HOURS:
-                //xAxisLabel.text = "Time (hrs)";
+                xAxisLabel.text = "Time (hrs)";
                 label_spacing = (maxTime * 60) / 10;
                 break;
 
             case TimeFormat.MINUTES:
-                //xAxisLabel.text = "Time (mins)";
+                xAxisLabel.text = "Time (mins)";
                 label_spacing = (maxTime * 60) / 10;
                 break;
 
             case TimeFormat.SECONDS:
-                // xAxisLabel.text = "Time (secs)";
-                number_spacing = maxTime / 100;
+                xAxisLabel.text = "Time (secs)";
+                label_spacing = maxTime / 100;
 
                 break;
 
             default:
                 break;
         }
-
-        xAxis.positionCount = 2;
     }
 
     private void DrawXMarkerLines()
@@ -141,11 +126,11 @@ public class AxisGen : MonoBehaviour
         for (int a = 0; a <= label_spacing; a += 6) //break in to hour intervals
         {
             smallMarkerPos = largeMarkerPos;
-            GameObject curTimeLabel = Instantiate(xLargeMarker, new Vector3(largeMarkerPos, XShift, 0.0f), Quaternion.identity, graphHolder.transform);
-            xLargeMarker.GetComponent<LineRenderer>().SetPosition(0, new Vector3(transform.position.x, transform.position.y + 10));
-            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, XShift - 0.7f, 0.0f), Quaternion.identity, graphHolder.transform);
+            GameObject curTimeLabel = Instantiate(xLargeMarker, new Vector3(largeMarkerPos, XShift, 0.0f), Quaternion.identity/*, graphHolder.transform*/);
+            curTimeLabel.GetComponent<LineRenderer>().SetPosition(0, new Vector3(xLargeMarker.transform.position.x, xLargeMarker.transform.position.y + 100));
+            GameObject largerMarkerLabel = Instantiate(textBox, new Vector3(largeMarkerPos, XShift - 0.7f, 0.0f), Quaternion.identity/*, graphHolder.transform*/);
             largerMarkerLabel.GetComponent<Text>().text = hour.ToString();
-            //largerMarkerLabel.transform.SetParent(graphHolder.transform);
+            largerMarkerLabel.transform.SetParent(graphHolder.transform);
             largeMarkerPos += xEndPos.x / maxTime;
 
             if (!smallMarkersSet) //to ensure the gap starts at 0 each time
@@ -157,21 +142,21 @@ public class AxisGen : MonoBehaviour
             {
                 for (int b = 0; b < 6; b++) //break in to 10's of minutes
                 {
-                    GameObject curSmallLabel = Instantiate(xSmallMarker, new Vector3(smallMarkerPos, XShift, 0.0f), Quaternion.identity, graphHolder.transform);
+                    GameObject curSmallLabel = Instantiate(xSmallMarker, new Vector3(smallMarkerPos, XShift, 0.0f), Quaternion.identity/*, graphHolder.transform*/);
                     if (b == 3)
                     {
-                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(smallMarkerPos, XShift - 0.5f, 0.0f), Quaternion.identity, graphHolder.transform);
+                        GameObject smallMarkerLabel = Instantiate(textBox, new Vector3(smallMarkerPos, XShift - 0.5f, 0.0f), Quaternion.identity/*, graphHolder.transform*/);
                         Text tempText = smallMarkerLabel.GetComponent<Text>();
                         tempText.fontSize = 12;
                         tempText.text = hour.ToString() + ":30";
-                        //smallMarkerLabel.transform.SetParent(graphHolder.transform);
+                        smallMarkerLabel.transform.SetParent(graphHolder.transform);
                     }
                     //add marker label
                     smallMarkerPos += smallMarkerProgression;
-                    // curSmallLabel.transform.SetParent(graphHolder.transform);
+                    curSmallLabel.transform.SetParent(graphHolder.transform);
                 }
             }
-            //curTimeLabel.transform.SetParent(graphHolder.transform);
+            curTimeLabel.transform.SetParent(graphHolder.transform);
 
             hour++;
         }
